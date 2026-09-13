@@ -152,7 +152,8 @@ const scene=new THREE.Scene();
 scene.background=new THREE.Color(0x0b0705);
 scene.fog=new THREE.Fog(0x0b0705,14,32);
 const cam=new THREE.PerspectiveCamera(42,1,0.1,100);
-function resize(){ renderer.setSize(innerWidth,innerHeight); cam.aspect=innerWidth/innerHeight; cam.updateProjectionMatrix(); }
+function resize(){ renderer.setSize(innerWidth,innerHeight); cam.aspect=innerWidth/innerHeight;
+ cam.fov=cam.aspect<.75?64:42; cam.updateProjectionMatrix(); }
 addEventListener('resize',resize); resize();
 scene.add(new THREE.AmbientLight(0x3a3020,1.5));
 const key=new THREE.DirectionalLight(0xffe2b0,1.15); key.position.set(5,9,6); key.castShadow=true;
@@ -444,7 +445,7 @@ let camT=0;
 function updateCam(dt){ camT+=dt;
  const h=stackN*BLOCK_H, ty=LEVEL0+h*.5+.5;
  cam.position.x=Math.sin(camT*.24)*.22;
- const af=cam.aspect>=1?1:Math.min(1.65,.8/cam.aspect);
+ const af=cam.aspect>=1?1:(cam.aspect<.75?1.05:Math.min(1.65,.8/cam.aspect));
  cam.position.y=lerp(cam.position.y,ty+(2.3+stackN*.08)*af,2*dt);
  cam.position.z=lerp(cam.position.z,(7.8+stackN*.55)*af,2*dt);
  cam.lookAt(0,ty+.15,0);
@@ -474,7 +475,7 @@ function loop(){ requestAnimationFrame(loop);
 // ---------------- boot
 buildTower(4); updStats();
 { const h=stackN*BLOCK_H, ty=LEVEL0+h*.5+.5;
- const af0=cam.aspect>=1?1:Math.min(1.65,.8/cam.aspect);
+ const af0=cam.aspect>=1?1:(cam.aspect<.75?1.05:Math.min(1.65,.8/cam.aspect));
  cam.position.set(0,ty+(2.3+stackN*.08)*af0,(7.8+stackN*.55)*af0); cam.lookAt(0,ty+.15,0); }
 if(FORCE_WIN){ state='play'; $('menu').classList.add('hidden');
  setTimeout(()=>{ blocks.forEach(b=>{ b.userData.state='fall'; b.userData.y=-99; b.position.y=-99; }); win(); },400); }
