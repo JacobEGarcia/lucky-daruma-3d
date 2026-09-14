@@ -50,10 +50,11 @@ button:hover{background:rgba(232,200,106,.1);box-shadow:0 0 22px rgba(212,175,55
  font-size:11.5px;letter-spacing:.28em;opacity:0;transition:opacity .3s;pointer-events:none;
  text-shadow:0 0 14px rgba(212,175,55,.5);white-space:nowrap}
 #hint{position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:4;font-size:10px;
- letter-spacing:.22em;color:var(--dim);opacity:0;transition:opacity .8s;pointer-events:none;
+ letter-spacing:.22em;color:var(--cream);opacity:0;transition:opacity .8s;pointer-events:none;
+ text-shadow:0 1px 8px rgba(0,0,0,.85);
  white-space:nowrap;max-width:92vw}
 @media (max-width:520px){#hint{white-space:normal;text-align:center;line-height:1.9}}
-#hint.on{opacity:.85}
+#hint.on{opacity:.92}
 #cardwrap{position:fixed;inset:0;z-index:8;background:rgba(4,2,1,.92);display:none;
  align-items:center;justify-content:center;flex-direction:column;gap:16px;padding:20px}
 #cardwrap.open{display:flex}
@@ -155,7 +156,7 @@ const cam=new THREE.PerspectiveCamera(42,1,0.1,100);
 function resize(){ renderer.setSize(innerWidth,innerHeight); cam.aspect=innerWidth/innerHeight;
  cam.fov=cam.aspect<.75?64:42; cam.updateProjectionMatrix(); }
 addEventListener('resize',resize); resize();
-scene.add(new THREE.AmbientLight(0x3a3020,1.5));
+scene.add(new THREE.AmbientLight(0x47392a,1.6));
 const key=new THREE.DirectionalLight(0xffe2b0,1.15); key.position.set(5,9,6); key.castShadow=true;
 key.shadow.mapSize.set(1024,1024);
 key.shadow.camera.left=-7;key.shadow.camera.right=7;key.shadow.camera.top=10;key.shadow.camera.bottom=-3;
@@ -163,6 +164,7 @@ key.shadow.camera.far=30; key.shadow.bias=-.0004; scene.add(key);
 const rim=new THREE.DirectionalLight(0x8a6a3a,.55); rim.position.set(-6,5,-6); scene.add(rim);
 const lampL=new THREE.PointLight(0xff5a30,13,10,2); lampL.position.set(-3.4,3.2,-1.6); scene.add(lampL);
 const lampR=new THREE.PointLight(0xffc86a,9,9,2); lampR.position.set(3.6,4.4,-2.2); scene.add(lampR);
+const fill=new THREE.PointLight(0xffd2a0,5.5,12,2); fill.position.set(0,1.4,4.6); scene.add(fill);
 // ground + dais
 const ground=new THREE.Mesh(new THREE.CylinderGeometry(16,16,.4,48),
  new THREE.MeshStandardMaterial({color:0x120b06,roughness:.6,metalness:.2}));
